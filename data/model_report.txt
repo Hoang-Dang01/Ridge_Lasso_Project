@@ -1,0 +1,55 @@
+========================================================================
+         BÁO CÁO PHÂN TÍCH HỆ SỐ HỒI QUY RIDGE VÀ LASSO (TOÁN THUẦN)      
+========================================================================
+
+Dự án so sánh tác động của L2 Regularization (Ridge) và L1 Regularization (Lasso) 
+trên tập dữ liệu Logistics Data giả lập. Dữ liệu chứa biến nhiễu 'Warehouse_Temp' 
+để kiểm nghiệm tính năng lọc đặc trưng (Feature Selection).
+
+1. Tóm tắt Hiệu suất các Mô hình cơ sở (Alpha = 1.0):
+------------------------------------------------------------------------
+  * OLS baseline  : Train MSE = 23.8153 | Test MSE = 29.9003 | R2 = 0.999597
+  * Ridge (a=1.0) : Train MSE = 23.9294 | Test MSE = 30.3642 | R2 = 0.999591
+  * Lasso (a=1.0) : Train MSE = 27.7906 | Test MSE = 34.0928 | R2 = 0.999541
+
+2. So sánh Trọng số Hệ số hồi quy (Coefficients) tại Alpha = 1.0:
+------------------------------------------------------------------------
+  Tên Tính Năng (Feature) | OLS        | Ridge (a=1.0)  | Lasso (a=1.0) 
+-----------------------------------------------------------------
+  Input_Qty          |   184.7321 |       184.5026 |       183.7302
+  Output_Qty         |  -198.0978 |      -197.8535 |      -197.1579
+  Lead_Time          |    21.1779 |        21.1487 |        20.1300
+  Warehouse_Temp     |     0.0053 |        -0.0070 |         0.0000
+  Promo_Flag         |     9.9519 |         9.9505 |         8.9658
+
+3. Nhận xét Phân tích Học thuật:
+------------------------------------------------------------------------
+  - Co ngót Trọng số L2 (Ridge Regression):
+    Khi tăng alpha, Ridge giảm dần các giá trị trọng số của mọi đặc trưng về sát 0,
+    nhưng KHÔNG BAO GIỜ loại bỏ chúng hoàn toàn (ví dụ: hệ số Warehouse_Temp tại 
+    alpha=1.0 là -0.0857 và alpha=100.0 là -0.0856). Ridge giữ lại tất cả các biến.
+
+  - Triệt tiêu Trọng số L1 (Lasso Regression - Lọc đặc trưng):
+    Lasso áp dụng hình phạt trị tuyệt đối giúp ép các hệ số của các biến không quan trọng
+    (biến nhiễu) về CHÍNH XÁC 0.0000. Trong trường hợp này, hệ số Warehouse_Temp bị ép về 
+    chính xác 0.0000 tại tất cả các alpha >= 0.1, loại bỏ hoàn toàn biến nhiễu này ra khỏi
+    mô hình dự đoán.
+
+  - Biến số Quan trọng nhất:
+    Dựa trên độ lớn của trọng số (hệ số tuyệt đối), hai biến tác động mạnh nhất đến
+    Inventory_Level là Output_Qty (khoảng -198) và Input_Qty (khoảng +188).
+
+4. Bảng phân phối giá trị hệ số biến Warehouse_Temp qua các Alpha:
+------------------------------------------------------------------------
+  Alpha    | Hệ số Ridge     | Hệ số Lasso    
+---------------------------------------------
+     0.001 |        0.005242 |        0.004168
+      0.01 |        0.005132 |        0.000000
+       0.1 |        0.004030 |        0.000000
+       1.0 |       -0.006963 |        0.000000
+      10.0 |       -0.114206 |        0.000000
+     100.0 |       -0.961323 |        0.000000
+    1000.0 |       -2.401868 |        0.000000
+
+========================================================================
+Tài liệu báo cáo đã được sinh tự động thành công.
