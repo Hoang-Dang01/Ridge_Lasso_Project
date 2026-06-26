@@ -52,4 +52,3 @@ trên tập dữ liệu Logistics Data giả lập. Dữ liệu chứa biến nh
     1000.0 |       -2.401868 |        0.000000
 
 ========================================================================
-Tài liệu báo cáo đã được sinh tự động thành công.
