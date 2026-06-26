@@ -54,11 +54,6 @@ Bạn có thể chạy chuỗi lệnh sau từ thư mục gốc của dự án �
 python src/data_generator.py; python src/train_and_report.py; python src/visualize_results.py
 ```
 
-### Chạy trên Linux / macOS (Terminal):
-```bash
-python src/data_generator.py && python src/train_and_report.py && python src/visualize_results.py
-```
-
 ---
 
 ## 📊 Phân tích kết quả thực tế (Tại Alpha = 1.0)
